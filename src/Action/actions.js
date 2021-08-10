@@ -24,12 +24,12 @@ export const fetchUsers = () => {
     dispatch(fetchUserRequest);
     axios
       .get("https://jsonplaceholder.typicode.com/users")
-      .then((response) => {
-        const users = response.data;
+      .then(({data}) => {
+        const users = data;
         dispatch(fetchUserSuccess(users));
       })
-      .catch((error) => {
-        const errorMsg = error.message;
+      .catch(({message}) => {
+        const errorMsg = message;
         dispatch(fetchUserFailure(errorMsg));
       });
   };
