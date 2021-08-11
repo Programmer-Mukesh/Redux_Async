@@ -1,14 +1,16 @@
 import React, { useEffect } from "react";
 import { fetchUsers } from "../Action/actions";
-import { connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import "./component.css";
 import { headerArray } from "./constant";
 import TableHeader from "./tableHeader";
 import UserDetails from "./tableInformations";
 
-const UserTable = ({ fetchUsers, userData }) => {
+const UserTable = () => {
+  const dispatch = useDispatch();
+  const userData = useSelector((store) => store.user);
   useEffect(() => {
-    fetchUsers();
+    dispatch(fetchUsers());
   }, []);
 
   return userData.loading ? (
@@ -26,15 +28,4 @@ const UserTable = ({ fetchUsers, userData }) => {
   );
 };
 
-const mapStatetoProps = (state) => {
-  return {
-    userData: state.user,
-  };
-};
-
-const mapDispatchtoProps = (dispatch) => {
-  return {
-    fetchUsers: () => dispatch(fetchUsers()),
-  };
-};
-export default connect(mapStatetoProps, mapDispatchtoProps)(UserTable);
+export default UserTable;
